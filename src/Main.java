@@ -5,20 +5,27 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        LimitException limitException = new LimitException("Эльнур");
-        BackAccount backAccount = new BackAccount(1500);
-        System.out.println(" клиент:" + limitException.getRemainingAmount());
-        System.out.println("остаток:" + backAccount.getAmount());
-        while (true) {
-            int i = 6000;
+        BackAccount backAccount= new BackAccount();
+        backAccount.depozit(15000);
+        while (true){
+            try {
+                backAccount.withDraw(6000);
+            }
+            catch (LimitException e){
+                try {
+                    backAccount.withDraw( (int) e.getRemainingAmount());
+                }
 
-            System.out.println("Снято 6000 сом. Остаток на счете: " + backAccount.getAmount() + " сом");
+                catch (LimitException i){
+                    System.out.println(i.getMessage());
+                }
+
+            }
+            System.out.println(backAccount.getAmount());
+            if (backAccount.getAmount()== 0 ){
+                break;
+            }
         }
-    } catch (LimitException e;
-
-    {
-        System.out.println("Ошибка: " + e.getMessage());
-        System.out.println("Максимальная сумма для снятия: " + e.getRemainingAmount() + " сом");
     }
 }
 
